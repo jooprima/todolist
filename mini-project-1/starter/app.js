@@ -8,6 +8,7 @@ const clearButton = document.querySelector("#clear-todos");
 
 
 todoForm.addEventListener("submit",addTodo);
+todoList.addEventListener("click",deleteTodo);
 
 function addTodo(e) {
     e.preventDefault();
@@ -24,7 +25,7 @@ function addTodo(e) {
 
     //memberi properti untuk a element
     a.href="#";
-    a.className="badge badge-danger"
+    a.className="badge badge-danger delete-todo"
     a.innerHTML = "Delete"
 
     //menyelipkan element a ke dalam element li
@@ -34,4 +35,16 @@ function addTodo(e) {
     todoList.appendChild(li)
 
     console.log(li);
+}
+
+function deleteTodo(e){
+    e.preventDefault();
+
+    if (e.target.classList.contains("delete-todo")) {
+        const parent = e.target.parentElement;
+
+        parent.remove();
+
+        
+    }
 }
