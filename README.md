@@ -1,2 +1,2 @@
-# todolist
-mini project TodoList
+# js-mini-projects
+This repo contains mini projects built with vanillaJS
