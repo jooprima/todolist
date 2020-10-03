@@ -6,51 +6,50 @@ const filterInput = document.querySelector("#filter-input");
 const todoList = document.querySelector("#todo-list");
 const clearButton = document.querySelector("#clear-todos");
 
-
-todoForm.addEventListener("submit",addTodo);
-todoList.addEventListener("click",deleteTodo);
+todoForm.addEventListener("submit", addTodo);
+todoList.addEventListener("click", deleteTodo);
 
 function addTodo(e) {
-    if(todoInput.value){
+  if (todoInput.value) {
     e.preventDefault();
-    
+
     //membuat Li element
-    const li = document.createElement("li")
-    li.className = "list-group-item d-flex justify-content-between align-items-center mb-1"
+    const li = document.createElement("li");
+    li.className =
+      "list-group-item d-flex justify-content-between align-items-center mb-1";
 
     //menambahkan children ke dalam element li
-    li.appendChild(document.createTextNode(todoInput.value))
+    li.appendChild(document.createTextNode(todoInput.value));
 
     //membuat delete button
     const a = document.createElement("a");
 
     //memberi properti untuk a element
-    a.href="#";
-    a.className="badge badge-danger delete-todo"
-    a.innerHTML = "Delete"
+    a.href = "#";
+    a.className = "badge badge-danger delete-todo";
+    a.innerHTML = "Delete";
 
     //menyelipkan element a ke dalam element li
-    li.appendChild(a)
+    li.appendChild(a);
 
     //memasukan elemnt li ke dalam element todolist
-    todoList.appendChild(li)
+    todoList.appendChild(li);
 
     //mengosongkan form setelah di input
-    todoInput.value = ""
-    }else{
-        alert("Tidak boleh kosong ! ")
-    }
+    todoInput.value = "";
+  } else {
+    alert("Tidak boleh kosong ! ");
+  }
 }
 
-function deleteTodo(e){
-    e.preventDefault();
+function deleteTodo(e) {
+  e.preventDefault();
 
-    if (e.target.classList.contains("delete-todo")) {
-        if (confirm("Apakah anda yakin akan menghapus?")) {
-            const parent = e.target.parentElement;
+  if (e.target.classList.contains("delete-todo")) {
+    if (confirm("Apakah anda yakin akan menghapus?")) {
+      const parent = e.target.parentElement;
 
-            parent.remove();    
-        }
-        
+      parent.remove();
     }
+  }
 }
