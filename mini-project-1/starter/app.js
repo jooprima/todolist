@@ -11,6 +11,7 @@ todoForm.addEventListener("submit",addTodo);
 todoList.addEventListener("click",deleteTodo);
 
 function addTodo(e) {
+    if(todoInput.value){
     e.preventDefault();
     
     //membuat Li element
@@ -36,6 +37,9 @@ function addTodo(e) {
 
     //mengosongkan form setelah di input
     todoInput.value = ""
+    }else{
+        alert("Tidak boleh kosong ! ")
+    }
 }
 
 function deleteTodo(e){
