@@ -8,6 +8,7 @@ const clearButton = document.querySelector("#clear-todos");
 
 todoForm.addEventListener("submit", addTodo);
 todoList.addEventListener("click", deleteTodo);
+clearButton.addEventListener("click", clearTodos);
 
 function addTodo(e) {
   if (todoInput.value) {
@@ -52,4 +53,8 @@ function deleteTodo(e) {
       parent.remove();
     }
   }
+}
+
+function clearTodos() {
+  todoList.innerHTML = "";
 }
