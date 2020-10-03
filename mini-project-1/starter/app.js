@@ -34,17 +34,19 @@ function addTodo(e) {
     //memasukan elemnt li ke dalam element todolist
     todoList.appendChild(li)
 
-    console.log(li);
+    //mengosongkan form setelah di input
+    todoInput.value = ""
 }
 
 function deleteTodo(e){
     e.preventDefault();
 
     if (e.target.classList.contains("delete-todo")) {
-        const parent = e.target.parentElement;
+        if (confirm("Apakah anda yakin akan menghapus?")) {
+            const parent = e.target.parentElement;
 
-        parent.remove();
-
+            parent.remove();    
+        }
         
     }
 }
