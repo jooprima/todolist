@@ -6,16 +6,63 @@ const filterInput = document.querySelector("#filter-input");
 const todoList = document.querySelector("#todo-list");
 const clearButton = document.querySelector("#clear-todos");
 
-
 //kumpulan eventListener
+immediateLoadEventListener();
 
-todoForm.addEventListener("submit", addTodo);
-todoList.addEventListener("click", deleteTodo);
-clearButton.addEventListener("click", clearTodos);
-filterInput.addEventListener("keyup", filterTodos);
+function immediateLoadEventListener() {
+  //mendapatkan todos dari localStorage dan render di browser
+  document.addEventListener("DOMContentLoaded", getTodos);
 
+  //event untuk menambahkan todo
+  todoForm.addEventListener("submit", addTodo);
+
+  //event untuk menghapus 1 todo
+  todoList.addEventListener("click", deleteTodo);
+
+  //event untuk menghapus semua todo
+  clearButton.addEventListener("click", clearTodos);
+
+  //event untuk memfilter todos
+  filterInput.addEventListener("keyup", filterTodos);
+}
 
 //DOM Function
+
+function getTodos() {
+  let todos;
+
+  if (localStorage.getItem("todos") == null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("todos"));
+  }
+
+  todos.forEach((todo) => {
+    //membuat li element
+    const li = document.createElement("li");
+
+    //menambahkan class pada element li
+    li.className =
+      "todo-item list-group-item d-flex justify-content-between align-items-center mb-1";
+
+    //menambahkan children ke dalam element li
+    li.appendChild(document.createTextNode(todo));
+
+    //membuat delete button
+    const a = document.createElement("a");
+
+    //memberi properti untuk a element
+    a.href = "#";
+    a.className = "badge badge-danger delete-todo";
+    a.innerHTML = "Delete";
+
+    //menyelipkan element a ke dalam element li
+    li.appendChild(a);
+
+    //memasukan elemnt li ke dalam element todolist
+    todoList.appendChild(li);
+  });
+}
 
 function addTodo(e) {
   if (todoInput.value) {
@@ -45,7 +92,7 @@ function addTodo(e) {
 
     // addTodo localstorage
     addTodoLocalStorage(todoInput.value);
-    
+
     //mengosongkan form setelah di input
     todoInput.value = "";
   } else {
@@ -53,18 +100,18 @@ function addTodo(e) {
   }
 }
 
-function addTodoLocalStorage(toDoInputValue){
+function addTodoLocalStorage(toDoInputValue) {
   let todos;
 
   if (localStorage.getItem("todos") == null) {
     todos = [];
-  }else{
+  } else {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
 
-  todos.push(toDoInputValue)
+  todos.push(toDoInputValue);
 
-  localStorage.setItem("todos",JSON.stringify(todos))
+  localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 function deleteTodo(e) {
