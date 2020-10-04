@@ -6,10 +6,16 @@ const filterInput = document.querySelector("#filter-input");
 const todoList = document.querySelector("#todo-list");
 const clearButton = document.querySelector("#clear-todos");
 
+
+//kumpulan eventListener
+
 todoForm.addEventListener("submit", addTodo);
 todoList.addEventListener("click", deleteTodo);
 clearButton.addEventListener("click", clearTodos);
 filterInput.addEventListener("keyup", filterTodos);
+
+
+//DOM Function
 
 function addTodo(e) {
   if (todoInput.value) {
@@ -37,11 +43,28 @@ function addTodo(e) {
     //memasukan elemnt li ke dalam element todolist
     todoList.appendChild(li);
 
+    // addTodo localstorage
+    addTodoLocalStorage(todoInput.value);
+    
     //mengosongkan form setelah di input
     todoInput.value = "";
   } else {
     alert("Tidak boleh kosong ! ");
   }
+}
+
+function addTodoLocalStorage(toDoInputValue){
+  let todos;
+
+  if (localStorage.getItem("todos") == null) {
+    todos = [];
+  }else{
+    todos = JSON.parse(localStorage.getItem("todos"));
+  }
+
+  todos.push(toDoInputValue)
+
+  localStorage.setItem("todos",JSON.stringify(todos))
 }
 
 function deleteTodo(e) {
