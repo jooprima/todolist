@@ -26,9 +26,32 @@ function immediateLoadEventListener() {
   filterInput.addEventListener("keyup", filterTodos);
 }
 
-//DOM Function
+// Reusable codes
+function createTodoElement(value) {
+  //membuat Li element
+  const li = document.createElement("li");
+  li.className =
+    "todo-item list-group-item d-flex justify-content-between align-items-center mb-1";
 
-function getTodos() {
+  //menambahkan children ke dalam element li
+  li.appendChild(document.createTextNode(value));
+
+  //membuat delete button
+  const a = document.createElement("a");
+
+  //memberi properti untuk a element
+  a.href = "#";
+  a.className = "badge badge-danger delete-todo";
+  a.innerHTML = "Delete";
+
+  //menyelipkan element a ke dalam element li
+  li.appendChild(a);
+
+  //memasukan elemnt li ke dalam element todolist
+  todoList.appendChild(li);
+}
+
+function getItemFromLocalStorage() {
   let todos;
 
   if (localStorage.getItem("todos") == null) {
@@ -37,58 +60,23 @@ function getTodos() {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
 
+  return todos;
+}
+
+//DOM Function
+function getTodos() {
+  const todos = getItemFromLocalStorage();
+
   todos.forEach((todo) => {
-    //membuat li element
-    const li = document.createElement("li");
-
-    //menambahkan class pada element li
-    li.className =
-      "todo-item list-group-item d-flex justify-content-between align-items-center mb-1";
-
-    //menambahkan children ke dalam element li
-    li.appendChild(document.createTextNode(todo));
-
-    //membuat delete button
-    const a = document.createElement("a");
-
-    //memberi properti untuk a element
-    a.href = "#";
-    a.className = "badge badge-danger delete-todo";
-    a.innerHTML = "Delete";
-
-    //menyelipkan element a ke dalam element li
-    li.appendChild(a);
-
-    //memasukan elemnt li ke dalam element todolist
-    todoList.appendChild(li);
+    createTodoElement(todo);
   });
 }
 
 function addTodo(e) {
+  e.preventDefault();
   if (todoInput.value) {
-    e.preventDefault();
-
-    //membuat Li element
-    const li = document.createElement("li");
-    li.className =
-      "todo-item list-group-item d-flex justify-content-between align-items-center mb-1";
-
-    //menambahkan children ke dalam element li
-    li.appendChild(document.createTextNode(todoInput.value));
-
-    //membuat delete button
-    const a = document.createElement("a");
-
-    //memberi properti untuk a element
-    a.href = "#";
-    a.className = "badge badge-danger delete-todo";
-    a.innerHTML = "Delete";
-
-    //menyelipkan element a ke dalam element li
-    li.appendChild(a);
-
-    //memasukan elemnt li ke dalam element todolist
-    todoList.appendChild(li);
+    
+    createTodoElement(todoInput.value);
 
     // addTodo localstorage
     addTodoLocalStorage(todoInput.value);
@@ -101,13 +89,7 @@ function addTodo(e) {
 }
 
 function addTodoLocalStorage(toDoInputValue) {
-  let todos;
-
-  if (localStorage.getItem("todos") == null) {
-    todos = [];
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
-  }
+  const todos = getItemFromLocalStorage();
 
   todos.push(toDoInputValue);
 
